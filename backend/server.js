@@ -13,8 +13,12 @@ const ldClient = LaunchDarkly.init(process.env.LD_SDK_KEY);
 app.get('/feature', async (req, res) => {
     try {
         await ldClient.waitForInitialization();
-        const user = { key: req.query.user || "anonymous-user" };
-        const showFeature = await ldClient.variation("show-feature-flag", user, false);
+        const user = {
+            key: req.query.user || "anonymous-user",
+            country: "Malaysia"  // 👈 Send country attribute
+        };
+        
+        const showFeature = await ldClient.variation("simple-test", user, false);
         res.json({ showFeature });
     } catch (error) {
         console.error("LD error:", error);

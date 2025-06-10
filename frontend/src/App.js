@@ -1,20 +1,7 @@
-import { useEffect, useState } from "react";
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 function App() {
-    const [showFeature, setShowFeature] = useState(false);
-
-    useEffect(() => {
-        let userKey = localStorage.getItem("user-key");
-        if (!userKey) {
-            userKey = "user-" + Math.floor(Math.random() * 10000);
-            localStorage.setItem("user-key", userKey);
-        }
-
-        fetch("http://localhost:3001/feature?user=" + userKey)
-            .then(res => res.json())
-            .then(data => setShowFeature(data.showFeature))
-            .catch(() => setShowFeature(false));
-    }, []);
+    const { 'simple-test': showFeature } = useFlags();
 
     return (
         <div style={{ padding: 20 }}>

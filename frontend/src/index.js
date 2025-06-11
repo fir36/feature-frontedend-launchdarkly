@@ -7,9 +7,9 @@ import { LDProvider } from 'launchdarkly-react-client-sdk';
 
 // Full user object with common attributes
 const user = { 
-    key: 'user-123',               // Required unique user key
-    name: 'John Doe',              // Optional
-    email: 'john@example.com',     // Optional
+    key: currentUser.id,        // Your app's user ID
+    name: currentUser.name,
+    email: currentUser.email,
     country: 'Malaysia',           // IMPORTANT for your flag rule to match!
     custom: {                      // You can add any other custom attributes here
         plan: 'premium',

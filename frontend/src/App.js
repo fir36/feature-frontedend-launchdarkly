@@ -1,11 +1,10 @@
-// frontend/src/App.js
-
 import React from 'react';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 function App() {
-    // Access your flag(s)
-    const { 'simple-test': showFeature } = useFlags();
+    const { 'simple-test': bannerVariation } = useFlags();
+
+    const showFeature = bannerVariation === 'show-banner';
 
     return (
         <div style={{ padding: 20 }}>

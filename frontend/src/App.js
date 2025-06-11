@@ -1,20 +1,15 @@
-// frontend/src/App.js
-
-import React, { useEffect } from 'react';
-import { useFlags, useLDClient } from 'launchdarkly-react-client-sdk';
+import React, { useEffect, useState } from 'react';
+import { useLDClient } from 'launchdarkly-react-client-sdk';
 
 function App() {
-    // Read your flag → must match "frontend-feature"
-    const { 'frontend-feature': showFeature } = useFlags();
-
-    // Get LDClient instance
     const ldClient = useLDClient();
+    const [showFeature, setShowFeature] = useState(false);
 
-    // Force evaluation event (optional, but helps show user in Evaluations tab)
     useEffect(() => {
         if (ldClient) {
             const currentVariation = ldClient.variation('frontend-feature', false);
             console.log('[LaunchDarkly] Forced evaluation:', currentVariation);
+            setShowFeature(currentVariation);
         }
     }, [ldClient]);
 

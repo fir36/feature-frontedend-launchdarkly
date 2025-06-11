@@ -15,7 +15,7 @@ if (!anonKey) {
 const user = {
     key: anonKey,
     anonymous: true,
-    country: 'Malaysia',  // IMPORTANT for your flag rule!
+    country: 'Malaysia',  // IMPORTANT for your flag rule to match!
     custom: {
         plan: 'free',
         team: 'guest'

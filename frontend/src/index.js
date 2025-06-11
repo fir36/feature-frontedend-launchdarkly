@@ -5,24 +5,26 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { LDProvider } from 'launchdarkly-react-client-sdk';
 
-// Full user object with common attributes
-const user = { 
-    key: currentUser.id,        // Your app's user ID
-    name: currentUser.name,
-    email: currentUser.email,
-    country: 'Malaysia',           // IMPORTANT for your flag rule to match!
-    custom: {                      // You can add any other custom attributes here
-        plan: 'premium',
-        team: 'marketing'
+// Anonymous user fallback
+let anonKey = localStorage.getItem('ld-user-key');
+if (!anonKey) {
+    anonKey = `anon-${Math.random().toString(36).substr(2, 9)}`;
+    localStorage.setItem('ld-user-key', anonKey);
+}
+
+const user = {
+    key: anonKey,
+    anonymous: true,
+    country: 'Malaysia',  // IMPORTANT for your flag rule!
+    custom: {
+        plan: 'free',
+        team: 'guest'
     }
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <LDProvider 
-        clientSideID={process.env.REACT_APP_LD_CLIENT_ID} 
-        user={user}                // Pass full user object here
-    >
+    <LDProvider clientSideID={process.env.REACT_APP_LD_CLIENT_ID} user={user}>
         <App />
     </LDProvider>
 );

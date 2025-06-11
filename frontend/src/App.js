@@ -1,12 +1,16 @@
+// frontend/src/App.js
+
 import React, { useEffect } from 'react';
 import { useFlags, useLDClient } from 'launchdarkly-react-client-sdk';
 
 function App() {
-    // NEW FLAG NAME → frontend-feature
+    // Read your flag → must match "frontend-feature"
     const { 'frontend-feature': showFeature } = useFlags();
 
+    // Get LDClient instance
     const ldClient = useLDClient();
 
+    // Force evaluation event (optional, but helps show user in Evaluations tab)
     useEffect(() => {
         if (ldClient) {
             const currentVariation = ldClient.variation('frontend-feature', false);

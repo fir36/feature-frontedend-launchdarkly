@@ -24,7 +24,7 @@ const user = {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <LDProvider clientSideID={process.env.REACT_APP_LD_CLIENT_ID} user={user}>
+    <LDProvider clientSideID={process.env.REACT_APP_LD_CLIENT_ID} context={user}>
         <App />
     </LDProvider>
 );

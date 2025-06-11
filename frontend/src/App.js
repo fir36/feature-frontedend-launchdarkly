@@ -1,14 +1,26 @@
 // frontend/src/App.js
 
-import React from 'react';
-import { useFlags } from 'launchdarkly-react-client-sdk';
+import React, { useEffect } from 'react';
+import { useFlags, useLDClient } from 'launchdarkly-react-client-sdk';
 
 function App() {
-    // IMPORTANT → match flag key (no spaces, should be the actual key)
+    // Get the flag value
     const { 'simple-test': bannerVariation } = useFlags();
 
-    // Since your flag returns "show-banner" / "hide-banner", compare strings
+    // Get the LDClient instance
+    const ldClient = useLDClient();
+
+    // Convert flag value to boolean for UI
     const showFeature = bannerVariation === 'show-banner';
+
+    // Force evaluate the flag (forces LaunchDarkly to log evaluation event)
+    useEffect(() => {
+        if (ldClient) {
+            // Variation call triggers evaluation event
+            const currentVariation = ldClient.variation('simple-test', 'hide-banner');
+            console.log('[LaunchDarkly] Forced evaluation:', currentVariation);
+        }
+    }, [ldClient]);
 
     return (
         <div style={{ padding: 20 }}>

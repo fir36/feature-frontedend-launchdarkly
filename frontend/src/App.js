@@ -1,9 +1,13 @@
+// frontend/src/App.js
+
 import React from 'react';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 function App() {
+    // IMPORTANT → match flag key (no spaces, should be the actual key)
     const { 'simple-test': bannerVariation } = useFlags();
 
+    // Since your flag returns "show-banner" / "hide-banner", compare strings
     const showFeature = bannerVariation === 'show-banner';
 
     return (
